@@ -6,7 +6,7 @@
 ---
 
 ## website
-Download finished mod, please go to [modrinth page]("https://modrinth.com/mod/improved-item")
+Download finished mod, please go to [modrinth page](https://modrinth.com/mod/improved-item)
 
 ---
 
