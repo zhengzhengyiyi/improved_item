@@ -13,6 +13,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -39,6 +40,7 @@ import org.slf4j.LoggerFactory;
 import com.zhengzhengyiyimc.effect.IgnoreLightningEffect;
 import com.zhengzhengyiyimc.enchantment.OverProtect;
 import com.zhengzhengyiyimc.enchantment.Thunder;
+import com.zhengzhengyiyimc.entity.ThrowingAxeEntity;
 import com.zhengzhengyiyimc.improvement.mob.Skeleton;
 import com.zhengzhengyiyimc.improvement.mob.Zombie;
 
@@ -50,6 +52,13 @@ public class Improved_item implements ModInitializer {
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
 	public static final RegistryEntry<StatusEffect> IGNORE_LIGHTNING_EFFECT_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier("improved_item", "ignore_lightningbolt"), new IgnoreLightningEffect());
 	public static final List<Map<PlayerEntity, Boolean>> LOW_HEALTH_PLAYER = new ArrayList<>();
+	public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
+		Registries.ENTITY_TYPE,
+		new Identifier("yourmod", "throwing_axe"),
+		EntityType.Builder.<ThrowingAxeEntity>create(SpawnGroup.MISC)
+			.dimensions(0.5F, 0.5F)
+			.build()
+	);
 
 	@Override
 	public void onInitialize() {
