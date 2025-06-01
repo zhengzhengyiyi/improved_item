@@ -5,6 +5,11 @@
 
 ---
 
+## website
+Download finished mod, please go to [modrinth page]("https://modrinth.com/mod/improved-item")
+
+---
+
 ## ✨ Core Features
 
 ### 🦴 **Enhanced Skeleton AI**
