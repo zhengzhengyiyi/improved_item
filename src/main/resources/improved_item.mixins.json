@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.zhengzhengyiyimc.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin",
+		"mob.AbstractSkeletonEntityMixin",
+		"mob.MobEntityMixin",
+		"player.PlayerEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
