@@ -43,8 +43,6 @@ Download finished mod, please go to [modrinth page]("https://modrinth.com/mod/im
 ---
 
 ## Download
-**no source code**\
-**no issue tracker**\
 **download here**
 
 ---
