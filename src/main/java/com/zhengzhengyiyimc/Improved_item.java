@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 
@@ -14,7 +15,9 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,6 +27,11 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +49,7 @@ public class Improved_item implements ModInitializer {
 	public static final Enchantment THUNDER_ENCHANTMENT = new Thunder();
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
 	public static final RegistryEntry<StatusEffect> IGNORE_LIGHTNING_EFFECT_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier("improved_item", "ignore_lightningbolt"), new IgnoreLightningEffect());
+	public static final List<Map<PlayerEntity, Boolean>> LOW_HEALTH_PLAYER = new ArrayList<>();
 
 	@Override
 	public void onInitialize() {
@@ -94,6 +103,23 @@ public class Improved_item implements ModInitializer {
 					player.setInvulnerable(false);
 				}
 			});
+		});
+
+		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+			if (player.getHealth() < 6) {
+				player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 200));
+				HashMap<PlayerEntity, Boolean> playerMap = new HashMap<PlayerEntity, Boolean>();
+				playerMap.put(player, true);
+				LOW_HEALTH_PLAYER.add(playerMap);
+			} else {
+				for (Map<PlayerEntity, Boolean> playerMap : LOW_HEALTH_PLAYER) {
+					if (playerMap.keySet().contains(player)) {
+						playerMap.replace((PlayerEntity) playerMap.keySet().toArray()[0], false);
+					}
+				}
+			}
+
+			return ActionResult.PASS;
 		});
 
 		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
