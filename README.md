@@ -38,7 +38,7 @@ Download finished mod, please go to [modrinth page](https://modrinth.com/mod/imp
 
 ---
 
-### feel thanks, please donate on [buy use a ko-fi](https://ko-fi.com/zhengzhengyiyi)
+### feel thanks, please donate on [buy us a ko-fi](https://ko-fi.com/zhengzhengyiyi)
 
 ---
 
