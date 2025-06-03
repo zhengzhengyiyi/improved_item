@@ -1,35 +1,30 @@
 package com.zhengzhengyiyimc;
 
-import org.lwjgl.glfw.GLFW;
-
-import com.zhengzhengyiyimc.network.ModPackets;
+import com.zhengzhengyiyimc.network.MouseClickPacketPayload;
+import com.zhengzhengyiyimc.renderer.ThrowingAxeModel;
 import com.zhengzhengyiyimc.renderer.ThrowingAxeRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.util.Identifier;
 
 public class Improved_itemClient implements ClientModInitializer {
+	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(new Identifier("zhengzhengyiyi", "throwing_axe"), "main");
+
 	@Override
 	public void onInitializeClient() {
-		EntityRendererRegistry.register(Improved_item.THROWING_AXE, (ctx) -> {
-			return new ThrowingAxeRenderer(ctx);
+        EntityModelLayerRegistry.registerModelLayer(MODEL_LAYER, ThrowingAxeModel::getTexturedModelData);
+		EntityRendererRegistry.register(Improved_item.THROWING_AXE, ThrowingAxeRenderer::new);
+		ClientTickEvents.START_CLIENT_TICK.register(client -> {
+			boolean isRightMousePressed = client.mouse.wasRightButtonClicked();
+			if (isRightMousePressed) {
+				if (client.player.getMainHandStack().isIn(ItemTags.AXES)) ClientPlayNetworking.send(new MouseClickPacketPayload(0));
+			}
 		});
-        
-        KeyBinding recallKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.throwingaxe.recall",
-            InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_R,
-            "category.throwingaxe"
-        ));
-        
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (recallKey.wasPressed()) {
-                ModPackets.sendRecallPacket();
-            }
-        });
 	}
 }

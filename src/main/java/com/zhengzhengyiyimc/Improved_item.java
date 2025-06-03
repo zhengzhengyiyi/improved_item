@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 
 import net.minecraft.enchantment.Enchantment;
@@ -43,6 +44,8 @@ import com.zhengzhengyiyimc.enchantment.Thunder;
 import com.zhengzhengyiyimc.entity.ThrowingAxeEntity;
 import com.zhengzhengyiyimc.improvement.mob.Skeleton;
 import com.zhengzhengyiyimc.improvement.mob.Zombie;
+import com.zhengzhengyiyimc.network.MouseClickPacketPayload;
+import com.zhengzhengyiyimc.network.ServerNetwork;
 
 public class Improved_item implements ModInitializer {
 	public static final String MOD_ID = "improved_item";
@@ -52,20 +55,24 @@ public class Improved_item implements ModInitializer {
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
 	public static final RegistryEntry<StatusEffect> IGNORE_LIGHTNING_EFFECT_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier("improved_item", "ignore_lightningbolt"), new IgnoreLightningEffect());
 	public static final List<Map<PlayerEntity, Boolean>> LOW_HEALTH_PLAYER = new ArrayList<>();
-	public static final EntityType<ThrowingAxeEntity> THROWING_AXE = Registry.register(
-		Registries.ENTITY_TYPE,
-		new Identifier("yourmod", "throwing_axe"),
-		EntityType.Builder.<ThrowingAxeEntity>create(SpawnGroup.MISC)
-			.dimensions(0.5F, 0.5F)
-			.build()
-	);
+	public static final EntityType<ThrowingAxeEntity> THROWING_AXE = 
+        EntityType.Builder.<ThrowingAxeEntity>create(ThrowingAxeEntity::new, SpawnGroup.MISC)
+			.dimensions(0.3F, 0.3F)
+            .build("throwing_axe");
 
 	@Override
 	public void onInitialize() {
 		Zombie.register();
 		Skeleton.register();
+		PayloadTypeRegistry.playC2S().register(MouseClickPacketPayload.ID, MouseClickPacketPayload.CODEC);
+		ServerNetwork.register();
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder"), THUNDER_ENCHANTMENT);
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "over_protect"), OVERPROTECT_ENCHANTMENT);
+		Registry.register(
+			Registries.ENTITY_TYPE,
+			new Identifier("improved_item", "throwing_axe"),
+			THROWING_AXE
+		);
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(createEnchantedBook(THUNDER_ENCHANTMENT, 1));
             entries.add(createEnchantedBook(THUNDER_ENCHANTMENT, 2));

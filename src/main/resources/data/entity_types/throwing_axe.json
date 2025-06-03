@@ -1,0 +1,40 @@
+{
+  "component_groups": {
+    "improved_item:throwing_axe": {
+      "minecraft:physics": {},
+      "minecraft:collision_box": {
+        "width": 0.5,
+        "height": 0.5
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 6,
+            "knockback": true,
+            "semi_random_diff_damage": false
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "minecraft:type_family": {
+      "family": ["improved_item", "projectile"]
+    },
+    "minecraft:health": {
+      "value": 1,
+      "max": 1
+    },
+    "minecraft:damage_sensor": {
+      "triggers": {
+        "cause": "all",
+        "deals_damage": false
+      }
+    }
+  },
+  "events": {
+    "improved_item:despawn": {
+      "remove": {}
+    }
+  }
+}
