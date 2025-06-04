@@ -27,17 +27,13 @@ public class ThrowingAxeEntity extends TridentEntity {
 
     public ThrowingAxeEntity(EntityType<? extends ThrowingAxeEntity> type, World world) {
         super(type, world);
+
+        pickupType = PickupPermission.ALLOWED;
     }
 
     @Override
     public void tick() {
-        this.setPitch(this.getPitch() + 20F);
         super.tick();
-    }
-
-    @Override
-    public boolean hasChanneling() {
-        return false; 
     }
 
     @Override
@@ -47,7 +43,10 @@ public class ThrowingAxeEntity extends TridentEntity {
 
     @Override
     protected boolean tryPickup(PlayerEntity player) {
-        return this.isOwner(player) && player.getInventory().insertStack(this.asItemStack());
+        if (this.pickupType == PickupPermission.ALLOWED) {
+            return player.getInventory().insertStack(this.asItemStack());
+        }
+        return false;
     }
 
     public ThrowingAxeEntity(World world, LivingEntity owner) {
@@ -98,6 +97,6 @@ public class ThrowingAxeEntity extends TridentEntity {
 
     @Override
     protected ItemStack asItemStack() {
-        return axeStack.copy();
+        return axeStack;
     }
 }
