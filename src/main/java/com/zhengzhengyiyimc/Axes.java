@@ -5,7 +5,8 @@ public enum Axes {
     STONE_AXE(1),
     IRON_AXE(2),
     DIAMOND_AXE(3),
-    NETHERITE_AXE(4);
+    NETHERITE_AXE(4),
+    GOLDEN_AXE(5);
     
     private int code;
 

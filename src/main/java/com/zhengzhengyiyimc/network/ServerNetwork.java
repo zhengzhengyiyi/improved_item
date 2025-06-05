@@ -22,6 +22,7 @@ public class ServerNetwork {
                 if (payload.message == Axes.WOODEN_AXE.getCode()) axe = Items.WOODEN_AXE;
                 if (payload.message == Axes.STONE_AXE.getCode()) axe = Items.STONE_AXE;
                 if (payload.message == Axes.IRON_AXE.getCode()) axe = Items.IRON_AXE;
+                if (payload.message == Axes.GOLDEN_AXE.getCode()) axe = Items.GOLDEN_AXE;
                 if (payload.message == Axes.DIAMOND_AXE.getCode()) axe = Items.DIAMOND_AXE;
                 if (payload.message == Axes.NETHERITE_AXE.getCode()) axe = Items.NETHERITE_AXE;
 

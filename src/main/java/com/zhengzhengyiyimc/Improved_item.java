@@ -55,7 +55,7 @@ public class Improved_item implements ModInitializer {
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
 	public static final RegistryEntry<StatusEffect> IGNORE_LIGHTNING_EFFECT_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier("improved_item", "ignore_lightningbolt"), new IgnoreLightningEffect());
 	public static final List<Map<PlayerEntity, Boolean>> LOW_HEALTH_PLAYER = new ArrayList<>();
-	public static final EntityType<ThrowingAxeEntity> THROWING_AXE = 
+	public static final EntityType<ThrowingAxeEntity> THROWING_AXE =
         EntityType.Builder.<ThrowingAxeEntity>create(ThrowingAxeEntity::new, SpawnGroup.MISC)
 			.dimensions(0.3F, 0.3F)
             .build("throwing_axe");
