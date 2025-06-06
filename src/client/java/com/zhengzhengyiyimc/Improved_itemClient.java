@@ -1,5 +1,8 @@
 package com.zhengzhengyiyimc;
 
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.zhengzhengyiyimc.network.MouseClickPacketPayload;
 import com.zhengzhengyiyimc.renderer.ThrowingAxeModel;
 import com.zhengzhengyiyimc.renderer.ThrowingAxeRenderer;
@@ -10,8 +13,10 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
@@ -46,9 +51,22 @@ public class Improved_itemClient implements ClientModInitializer {
 
 			if (isRightMousePressed && !isThrowing) {
 				if (client.player == null) return;
-				if (client.player.getMainHandStack().isIn(ItemTags.AXES)) ClientPlayNetworking.send(new MouseClickPacketPayload(code));
-				cooldownTicks = 10;
+				if (stack.isIn(ItemTags.AXES) && hasSpecificEnchantment(stack, Improved_item.THROW_ENCHANTMENT)) ClientPlayNetworking.send(new MouseClickPacketPayload(code));
+				cooldownTicks = 40;
 			}
 		});
 	}
+
+	public boolean hasSpecificEnchantment(ItemStack stack, Enchantment targetEnchant) {
+        Set<RegistryEntry<Enchantment>> enchantments = stack.getEnchantments().getEnchantments();
+        AtomicBoolean returnValue = new AtomicBoolean(false);
+
+        enchantments.forEach(enchantment -> {
+            if (enchantment.matchesId(new Identifier(Improved_item.MOD_ID, "throw"))) {
+                returnValue.set(true);
+            }
+        });
+
+        return returnValue.get();
+    }
 }
