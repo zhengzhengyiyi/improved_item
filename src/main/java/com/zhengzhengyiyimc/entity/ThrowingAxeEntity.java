@@ -43,9 +43,9 @@ public class ThrowingAxeEntity extends TridentEntity {
 
     @Override
     protected boolean tryPickup(PlayerEntity player) {
-        if (this.pickupType == PickupPermission.ALLOWED) {
-            return player.getInventory().insertStack(this.asItemStack());
-        }
+        // if (this.pickupType == PickupPermission.ALLOWED) {
+        //     return player.getInventory().insertStack(this.asItemStack());
+        // }
         return false;
     }
 

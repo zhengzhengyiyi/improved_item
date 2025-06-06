@@ -35,7 +35,6 @@ public class Improved_itemClient implements ClientModInitializer {
 
 			if (client.player == null) return;
 			ItemStack stack = client.player.getMainHandStack();
-			if (stack.hasEnchantments()) return;
 			int code = 0;
 			if (!stack.isIn(ItemTags.AXES)) return;
 			if (stack.getItem() == Items.WOODEN_AXE) code = 0;

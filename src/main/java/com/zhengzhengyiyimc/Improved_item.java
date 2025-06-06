@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zhengzhengyiyimc.effect.IgnoreLightningEffect;
 import com.zhengzhengyiyimc.enchantment.OverProtect;
+import com.zhengzhengyiyimc.enchantment.Throw;
 import com.zhengzhengyiyimc.enchantment.Thunder;
 import com.zhengzhengyiyimc.entity.ThrowingAxeEntity;
 import com.zhengzhengyiyimc.improvement.mob.Skeleton;
@@ -53,6 +54,7 @@ public class Improved_item implements ModInitializer {
 	private int tickCounter = 0;
 	public static final Enchantment THUNDER_ENCHANTMENT = new Thunder();
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
+	public static final Enchantment THROW_ENCHANTMENT = new Throw();
 	public static final RegistryEntry<StatusEffect> IGNORE_LIGHTNING_EFFECT_ENTRY = Registry.registerReference(Registries.STATUS_EFFECT, new Identifier("improved_item", "ignore_lightningbolt"), new IgnoreLightningEffect());
 	public static final List<Map<PlayerEntity, Boolean>> LOW_HEALTH_PLAYER = new ArrayList<>();
 	public static final EntityType<ThrowingAxeEntity> THROWING_AXE =
@@ -68,6 +70,7 @@ public class Improved_item implements ModInitializer {
 		ServerNetwork.register();
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder"), THUNDER_ENCHANTMENT);
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "over_protect"), OVERPROTECT_ENCHANTMENT);
+		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "throw"), THROW_ENCHANTMENT);
 		Registry.register(
 			Registries.ENTITY_TYPE,
 			new Identifier("improved_item", "throwing_axe"),

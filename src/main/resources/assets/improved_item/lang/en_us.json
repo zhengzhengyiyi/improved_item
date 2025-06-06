@@ -1,4 +1,5 @@
 {
     "effect.zhengzhengyiyi.ignore_lightningbolt": "ignore lightningbolt",
+    "effect.improved_item.ignore_lightingbolt.description": "§1ignore lighting damage",
     "enchantment.improved_item.thunder": "thunder"
 }
