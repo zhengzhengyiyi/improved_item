@@ -22,7 +22,6 @@ import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.GameEvent.Emitter;
 
 public class ThrowingAxeEntity extends TridentEntity {
-    private boolean isReturning = false;
     public ItemStack axeStack = new ItemStack(Items.IRON_AXE);
 
     public ThrowingAxeEntity(EntityType<? extends ThrowingAxeEntity> type, World world) {
@@ -81,18 +80,9 @@ public class ThrowingAxeEntity extends TridentEntity {
     @Override
     protected void onEntityHit(EntityHitResult hit) {
         if (!getWorld().isClient) {
-            float damage = isReturning ? 3.0f : 6.0f;
+            float damage = 12.0F;
             hit.getEntity().damage(getWorld().getDamageSources().thrown(this, getOwner()), damage);
-            
-            if (isReturning) {
-                this.discard();
-            }
         }
-    }
-
-    public void recall() {
-        this.isReturning = true;
-        this.setNoGravity(true);
     }
 
     @Override

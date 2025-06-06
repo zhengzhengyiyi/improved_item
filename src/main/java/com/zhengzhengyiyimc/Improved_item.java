@@ -99,16 +99,16 @@ public class Improved_item implements ModInitializer {
 		ServerTickEvents.END_WORLD_TICK.register(world -> {
 			if (world.isThundering()) {
 				tickCounter++;
-				if (tickCounter % 40 == 0) {
+				if (tickCounter % 80 == 0) {
 					world.getPlayers().forEach(player -> {
-						if (player.getMainHandStack().isIn(ItemTags.SWORDS)) {
+						if (player.getMainHandStack().isIn(ItemTags.SWORDS) && !(player.getMainHandStack().isOf(Items.WOODEN_SWORD))) {
 							LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
-							player.addStatusEffect(new StatusEffectInstance(IGNORE_LIGHTNING_EFFECT_ENTRY, 260, 1));
+							player.addStatusEffect(new StatusEffectInstance(IGNORE_LIGHTNING_EFFECT_ENTRY, 150, 1));
 							lightning.setPosition(player.getPos());
 							world.spawnEntity(lightning);
-						} else if (player.getOffHandStack().isIn(ItemTags.SWORDS)) {
+						} else if (player.getOffHandStack().isIn(ItemTags.SWORDS) && !(player.getOffHandStack().isOf(Items.WOODEN_SWORD))) {
 							LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
-							player.addStatusEffect(new StatusEffectInstance(IGNORE_LIGHTNING_EFFECT_ENTRY, 260));
+							player.addStatusEffect(new StatusEffectInstance(IGNORE_LIGHTNING_EFFECT_ENTRY, 150));
 							lightning.setPosition(player.getPos());
 							world.spawnEntity(lightning);
 						} else {

@@ -1,5 +1,7 @@
 {
     "effect.improved_item.ignore_lightningbolt": "§4免疫闪电",
     "effect.improved_item.ignore_lightingbolt.description": "§1不受闪电伤害",
-    "enchantment.improved_item.thunder": "§5闪电"
+    "enchantment.improved_item.thunder": "§5闪电",
+    "enchantment.improved_item.throw": "投掷",
+    "enchantment.improved_item.over_protect": "§2高级防御"
 }

@@ -4,13 +4,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.zhengzhengyiyimc.network.MouseClickPacketPayload;
-import com.zhengzhengyiyimc.renderer.ThrowingAxeModel;
 import com.zhengzhengyiyimc.renderer.ThrowingAxeRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.enchantment.Enchantment;
@@ -27,7 +25,6 @@ public class Improved_itemClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-        EntityModelLayerRegistry.registerModelLayer(MODEL_LAYER, ThrowingAxeModel::getTexturedModelData);
 		EntityRendererRegistry.register(Improved_item.THROWING_AXE, ThrowingAxeRenderer::new);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (cooldownTicks > 0) {
