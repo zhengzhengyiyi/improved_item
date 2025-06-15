@@ -4,6 +4,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -59,6 +60,8 @@ public class PlayerEntityMixin {
                     entity.velocityModified = true;
                 }
             });
+
+            world.addParticle(ParticleTypes.ANGRY_VILLAGER, player.getX(), player.getY(), player.getZ(), dashSpeed, dashSpeed, dashSpeed);
 
             world.playSound(
                 null,
