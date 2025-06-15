@@ -5,12 +5,6 @@
     "enchantment.improved_item.throw": "投掷",
     "enchantment.improved_item.over_protect": "§2高级防御",
 
-    "advancement.improved_item.thunder_god.title": "雷神",
-    "advancement.improved_item.thunder_god.description": "用闪电附魔同时击中5个敌人",
-    
-    "advancement.improved_item.axe_gang.title": "斧头帮",
-    "advancement.improved_item.axe_gang.description": "连续投掷10把斧头",
-    
-    "advancement.improved_item.iron_will.title": "钢铁之躯",
-    "advancement.improved_item.iron_will.description": "用高级防御附魔反弹100次攻击"
+    "config.improved_item.general": "通用",
+    "title.improved_item.config": "improved item 设置"
 }

@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.zhengzhengyiyimc.Improved_item;
+
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
     @Inject(
@@ -50,7 +52,7 @@ public class PlayerEntityMixin {
             world.getOtherEntities(player, hitbox).forEach(entity -> {
                 if (entity instanceof LivingEntity) {
                     if (world instanceof ServerWorld) {
-                        entity.damage(player.getDamageSources().playerAttack(player), 8.0f);
+                        entity.damage(player.getDamageSources().playerAttack(player), Improved_item.modConfig.movingHitDamage);
                     }
                     entity.setVelocity(
                         dashDirection.x * 1.2,
@@ -61,7 +63,7 @@ public class PlayerEntityMixin {
                 }
             });
 
-            world.addParticle(ParticleTypes.ANGRY_VILLAGER, player.getX(), player.getY(), player.getZ(), dashSpeed, dashSpeed, dashSpeed);
+            world.addParticle(ParticleTypes.EFFECT, player.getX(), player.getY(), player.getZ(), dashSpeed, dashSpeed, dashSpeed);
 
             world.playSound(
                 null,

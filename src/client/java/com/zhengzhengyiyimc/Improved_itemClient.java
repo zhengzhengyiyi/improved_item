@@ -26,6 +26,7 @@ public class Improved_itemClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(Improved_item.THROWING_AXE, ThrowingAxeRenderer::new);
+		
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (cooldownTicks > 0) {
                 cooldownTicks--;

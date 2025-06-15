@@ -3,5 +3,8 @@
     "effect.improved_item.ignore_lightingbolt.description": "§1ignore lighting damage",
     "enchantment.improved_item.thunder": "thunder",
     "enchantment.improved_item.throw": "throw",
-    "enchantment.improved_item.over_protect": "§2over protect"
+    "enchantment.improved_item.over_protect": "§2over protect",
+    
+    "config.improved_item.general": "general",
+    "title.improved_item.config": "improved item configure"
 }
