@@ -16,6 +16,8 @@ public class ServerNetwork {
         ServerPlayNetworking.registerGlobalReceiver(
             MouseClickPacketPayload.ID,
             (payload, context) -> {
+                if (!Improved_item.modConfig.enableThrowingAxe) return;
+                
                 World world = context.server().getOverworld();
                 ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(Improved_item.THROWING_AXE, world);
                 Item axe = Items.IRON_AXE;
@@ -29,7 +31,7 @@ public class ServerNetwork {
                 throwingAxeEntity.setPosition(context.player().getPos().add(0, 1.4, 0));
                 throwingAxeEntity.setAxeStack(new ItemStack(axe));
 
-                // if (!context.player().isCreative()) context.player().getMainHandStack().decrement(1);;
+                if (!context.player().isCreative()) context.player().getMainHandStack().setDamage(1);
 
                 world.spawnEntity(throwingAxeEntity);
                 throwingAxeEntity.addVelocity(context.player().getRotationVector().multiply(new Vec3d(1.5, 1.5, 1.5)));
