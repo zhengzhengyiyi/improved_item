@@ -58,7 +58,7 @@ public class Improved_item implements ModInitializer {
 	public static final String MOD_ID = "improved_item";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private int tickCounter = 0;
-	public static final ModConfig modConfig = new ModConfig();
+	public static ModConfig modConfig = new ModConfig();
 	public static final Enchantment THUNDER_ENCHANTMENT = new Thunder();
 	public static final Enchantment OVERPROTECT_ENCHANTMENT = new OverProtect();
 	public static final Enchantment THROW_ENCHANTMENT = new Throw();
@@ -82,7 +82,12 @@ public class Improved_item implements ModInitializer {
 			
 			String json = Files.readString(configPath);
 			ModConfig loaded = gson.fromJson(json, ModConfig.class);
-			modConfig.movingHitDamage = loaded.movingHitDamage;
+			try {
+				modConfig = loaded;
+			} catch (Exception e) {
+				LOGGER.warn("except warning {}, using defalt configure", e);
+				modConfig = new ModConfig();
+			}
 		} catch (Exception e) {
 			LOGGER.error("failed at loading, except {}", e);
 			save();
@@ -100,7 +105,7 @@ public class Improved_item implements ModInitializer {
 			Files.createDirectories(configPath.getParent());
 			Files.writeString(configPath, gson.toJson(modConfig));
 		} catch (Exception e) {
-			LOGGER.error("保存配置失败", e);
+			LOGGER.error("failed at saving, except error {}", e);
 		}
 	}
 

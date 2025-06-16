@@ -26,6 +26,7 @@ public class Improved_itemClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(Improved_item.THROWING_AXE, ThrowingAxeRenderer::new);
+		KeyBindings.register();
 		
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (cooldownTicks > 0) {
@@ -51,6 +52,12 @@ public class Improved_itemClient implements ClientModInitializer {
 				if (client.player == null) return;
 				if (stack.isIn(ItemTags.AXES) && hasSpecificEnchantment(stack, Improved_item.THROW_ENCHANTMENT)) ClientPlayNetworking.send(new MouseClickPacketPayload(code));
 				cooldownTicks = 40;
+			}
+		});
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if (KeyBindings.openConfigKey.isPressed()) {
+				client.setScreen(new ModScreen().create(null));
 			}
 		});
 	}

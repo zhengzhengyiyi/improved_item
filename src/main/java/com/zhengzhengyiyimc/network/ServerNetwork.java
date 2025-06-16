@@ -16,6 +16,8 @@ public class ServerNetwork {
         ServerPlayNetworking.registerGlobalReceiver(
             MouseClickPacketPayload.ID,
             (payload, context) -> {
+                if (!Improved_item.modConfig.enableThrowingAxe) return;
+                
                 World world = context.server().getOverworld();
                 ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(Improved_item.THROWING_AXE, world);
                 Item axe = Items.IRON_AXE;

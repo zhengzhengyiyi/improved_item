@@ -76,5 +76,7 @@ public class PlayerEntityMixin {
                 1.0f
             );
         }
+
+        target.damage(player.getDamageSources().generic(), Improved_item.modConfig.additionMovementDamage);
     }
 }
