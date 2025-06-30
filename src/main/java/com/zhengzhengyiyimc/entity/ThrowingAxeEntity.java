@@ -80,7 +80,7 @@ public class ThrowingAxeEntity extends TridentEntity {
     @Override
     protected void onEntityHit(EntityHitResult hit) {
         if (!getWorld().isClient) {
-            float damage = 12.0F;
+            float damage = Improved_item.modConfig.throwingAxeDamage;
             hit.getEntity().damage(getWorld().getDamageSources().thrown(this, getOwner()), damage);
         }
     }
