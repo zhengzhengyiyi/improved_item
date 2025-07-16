@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.zhengzhengyiyimc.Improved_item;
 
@@ -78,5 +79,12 @@ public class PlayerEntityMixin {
         }
 
         target.damage(player.getDamageSources().generic(), Improved_item.modConfig.additionMovementDamage);
+    }
+
+    @Inject(method = "getAttackCooldownProgress", at = @At("HEAD"), cancellable = true)
+    private void removeCooldown(float baseTime, CallbackInfoReturnable<Float> cir) {
+        if (!Improved_item.modConfig.attack_cooldown) {
+            cir.setReturnValue(1.0F);
+        }
     }
 }

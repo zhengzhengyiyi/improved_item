@@ -18,7 +18,7 @@ public class ServerNetwork {
             (payload, context) -> {
                 if (!Improved_item.modConfig.enableThrowingAxe) return;
                 
-                World world = context.server().getOverworld();
+                World world = context.player().getServer().getOverworld();
                 ThrowingAxeEntity throwingAxeEntity = new ThrowingAxeEntity(Improved_item.THROWING_AXE, world);
                 Item axe = Items.IRON_AXE;
                 if (payload.message == Axes.WOODEN_AXE.getCode()) axe = Items.WOODEN_AXE;

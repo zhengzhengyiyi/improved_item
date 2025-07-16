@@ -8,6 +8,7 @@ public class ModConfig implements Serializable {
     // throwing axe
     public boolean enableThrowingAxe = true;
     public float throwingAxeDamage = 12.0f;
+    public boolean attack_cooldown = true;
 
     // general
     public int additionMovementDamage = 0;

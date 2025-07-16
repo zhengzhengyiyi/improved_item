@@ -19,7 +19,13 @@ public class ModScreen {
         .setTitle(Text.translatable("title.improved_item.config"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        boolean isOperator = MinecraftClient.getInstance().player.hasPermissionLevel(4);
+        boolean isOperator = false;
+        try {
+            isOperator = MinecraftClient.getInstance().player.hasPermissionLevel(4);
+        } catch (Exception e) {
+            Improved_item.LOGGER.warn(e.toString());
+        }
+        
         ConfigCategory general = builder.getOrCreateCategory(Text.translatable("config.improved_item.general"));
         
         IntegerListEntry entry1 = entryBuilder.startIntField(Text.of("Addition player damage"), Improved_item.modConfig.additionMovementDamage)
@@ -48,13 +54,21 @@ public class ModScreen {
             .setDefaultValue(8)
             .build();
 
+        BooleanListEntry entry5 = entryBuilder.startBooleanToggle(Text.of("attack cooldown"), Improved_item.modConfig.attack_cooldown)
+            .setSaveConsumer(v -> {Improved_item.modConfig.attack_cooldown = v; Improved_item.save();})
+            .setDefaultValue(true)
+            .setTooltip(Text.of("to edit do attack cooldown, if false, you can do like in other pvp server"))
+            .build();
+
         entry2.setEditable(isOperator);
         entry3.setEditable(isOperator);
         entry4.setEditable(isOperator);
+        entry5.setEditable(isOperator);
 
         combat.addEntry(entry2);
         combat.addEntry(entry3);
         combat.addEntry(entry4);
+        combat.addEntry(entry5);
 
         return builder.build();
     }
