@@ -3,5 +3,9 @@
     "effect.improved_item.ignore_lightingbolt.description": "§1不受闪电伤害",
     "enchantment.improved_item.thunder": "§5闪电",
     "enchantment.improved_item.throw": "投掷",
-    "enchantment.improved_item.over_protect": "§2高级防御"
+    "enchantment.improved_item.over_protect": "§2高级防御",
+
+    "config.improved_item.general": "通用",
+    "config.improved_item.combat": "战斗",
+    "title.improved_item.config": "improved item 设置"
 }

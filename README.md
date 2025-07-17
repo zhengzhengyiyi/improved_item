@@ -63,4 +63,7 @@ HOOK EXAMPLES:
   - Verify: ```world.isThundering() ```
   - Check: ```player.getMainHandStack()``` has Thunder enchant
 
+  Q: find new exception or issue?
+  - Try: Please report to our issue tracker or talk in discussion
+
 </details>
