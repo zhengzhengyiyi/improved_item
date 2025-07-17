@@ -1,8 +1,7 @@
 package com.zhengzhengyiyimc.enchantment;
 
-import java.util.Optional;
-
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -11,21 +10,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.resource.featuretoggle.FeatureSet;
 
 public class Thunder extends Enchantment {
     public Thunder() {
-        super(new Properties(
-            ItemTags.SWORDS,
-            Optional.of(ItemTags.SWORDS),
-            5,
-            2,
-            new Cost(0, 3),
-            new Cost(1, 6),
-            3,
-            FeatureSet.of(FeatureFlags.VANILLA),
-            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND}));
+        super(
+            Rarity.UNCOMMON,
+            EnchantmentTarget.WEAPON,
+            new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
 
     @Override
@@ -36,11 +27,16 @@ public class Thunder extends Enchantment {
     }
 
     @Override
-    public void onAttack(LivingEntity attacker, Entity target, int level) {
+    public void onTargetDamaged(LivingEntity attacker, Entity target, int level) {
         LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, attacker.getWorld());
         lightningEntity.setPosition(target.getPos());
         target.getWorld().spawnEntity(lightningEntity);
         target.damage(attacker.getDamageSources().inFire(), level * 4);
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
     }
 
     @Override

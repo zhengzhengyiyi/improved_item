@@ -15,9 +15,8 @@ public class IgnoreLightningEffect extends StatusEffect {
 	}
 
 	@Override
-	public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+	public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 		// entity.isInvulnerableTo(entity.getWorld().getDamageSources().lightningBolt());
 		entity.setInvulnerable(true);
-		return true;
 	}
 }
