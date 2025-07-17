@@ -1,7 +1,6 @@
 package com.zhengzhengyiyimc;
 
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Map;
 
 import com.zhengzhengyiyimc.network.MouseClickPacketPayload;
 import com.zhengzhengyiyimc.renderer.ThrowingAxeRenderer;
@@ -12,9 +11,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
@@ -26,6 +25,8 @@ public class Improved_itemClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(Improved_item.THROWING_AXE, ThrowingAxeRenderer::new);
+		KeyBindings.register();
+		
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (cooldownTicks > 0) {
                 cooldownTicks--;
@@ -52,18 +53,23 @@ public class Improved_itemClient implements ClientModInitializer {
 				cooldownTicks = 40;
 			}
 		});
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if (KeyBindings.openConfigKey.isPressed()) {
+				client.setScreen(new ModScreen().create(null));
+			}
+		});
 	}
 
 	public boolean hasSpecificEnchantment(ItemStack stack, Enchantment targetEnchant) {
-        Set<RegistryEntry<Enchantment>> enchantments = stack.getEnchantments().getEnchantments();
-        AtomicBoolean returnValue = new AtomicBoolean(false);
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(stack);
 
-        enchantments.forEach(enchantment -> {
-            if (enchantment.matchesId(new Identifier(Improved_item.MOD_ID, "throw"))) {
-                returnValue.set(true);
-            }
-        });
-
-        return returnValue.get();
-    }
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+			Enchantment enchantment = entry.getKey();
+			if (enchantment == targetEnchant) {
+				return true;
+			}
+		}
+		return false;
+		}
 }

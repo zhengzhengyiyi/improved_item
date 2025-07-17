@@ -3,16 +3,12 @@ package com.zhengzhengyiyimc.entity;
 import com.zhengzhengyiyimc.Improved_item;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ProjectileDeflection;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -57,11 +53,11 @@ public class ThrowingAxeEntity extends TridentEntity {
         HitResult.Type type = hitResult.getType();
         if (type == HitResult.Type.ENTITY) {
             EntityHitResult entityHitResult = (EntityHitResult)hitResult;
-            Entity entity = entityHitResult.getEntity();
-            if (entity.getType().isIn(EntityTypeTags.REDIRECTABLE_PROJECTILE) && entity instanceof ProjectileEntity) {
-                ProjectileEntity projectileEntity = (ProjectileEntity)entity;
-                projectileEntity.deflect(ProjectileDeflection.REDIRECTED, this.getOwner(), this.getOwner(), true);
-            }
+            // Entity entity = entityHitResult.getEntity();
+            // if (entity.getType().isIn(EntityTypeTags.REDIRECTABLE_PROJECTILE) && entity instanceof ProjectileEntity) {
+            //     ProjectileEntity projectileEntity = (ProjectileEntity)entity;
+            //     projectileEntity.deflect(ProjectileDeflection.REDIRECTED, this.getOwner(), this.getOwner(), true);
+            // }
 
             this.onEntityHit(entityHitResult);
             this.getWorld().emitGameEvent(GameEvent.PROJECTILE_LAND, hitResult.getPos(), Emitter.of(this, (BlockState)null));
@@ -80,7 +76,7 @@ public class ThrowingAxeEntity extends TridentEntity {
     @Override
     protected void onEntityHit(EntityHitResult hit) {
         if (!getWorld().isClient) {
-            float damage = 12.0F;
+            float damage = Improved_item.modConfig.throwingAxeDamage;
             hit.getEntity().damage(getWorld().getDamageSources().thrown(this, getOwner()), damage);
         }
     }
